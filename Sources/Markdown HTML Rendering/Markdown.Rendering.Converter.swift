@@ -2,7 +2,7 @@ import CSS_HTML_Rendering
 import CSS_Theming
 import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
-import Render_Primitives
+import Render
 import Standard_Library_Extensions
 
 extension Markdown.Rendering {

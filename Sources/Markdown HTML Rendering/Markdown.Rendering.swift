@@ -2,8 +2,8 @@ import CSS_HTML_Rendering
 import CSS_Theming
 import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
-import Ownership_Mutable_Primitives
-public import Render_Primitives
+import Ownership_Mutable
+public import Render
 
 extension Markdown {
 
@@ -71,7 +71,7 @@ extension Markdown {
 
 extension Markdown.Rendering {
 
-    public typealias Action = Render_Primitives.Render.Action
+    public typealias Action = Render.Render.Action
 
     public static var `default`: Self { .init() }
 }
@@ -81,8 +81,8 @@ extension Markdown.Rendering {
     static func capture<V: HTML.View>(
         @HTML.Builder _ content: () -> V
     ) -> [Action] {
-        let buffer = Ownership.Mutable<[Render_Primitives.Render.Action]>([])
-        var ctx = Render_Primitives.Render.Context.capturing(into: buffer)
+        let buffer = Ownership.Mutable<[Render.Render.Action]>([])
+        var ctx = Render.Render.Context.capturing(into: buffer)
         ctx.render(content())
         return buffer.value
     }

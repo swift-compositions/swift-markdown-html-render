@@ -1,8 +1,8 @@
 import CSS_HTML_Rendering
 import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
-import Ownership_Mutable_Primitives
-import Render_Primitives
+import Ownership_Mutable
+import Render
 
 extension Markdown.Rendering {
 
@@ -14,7 +14,7 @@ extension Markdown.Rendering {
 
         public init<V: HTML.View>(@HTML.Builder _ content: () -> V) {
             let state = Ownership.Mutable(CaptureState())
-            var context = Render_Primitives.Render.Context.frameCapturer(into: state)
+            var context = Render.Render.Context.frameCapturer(into: state)
             context.render(content())
 
             guard let splitIndex = state.value.childrenIndex else {
@@ -75,7 +75,7 @@ extension Markdown.Rendering.Frame.Placeholder {
 
     public static func _render(
         _ view: borrowing Self,
-        context: inout Render_Primitives.Render.Context
+        context: inout Render.Render.Context
     ) {
 
         context.splice([])
@@ -84,12 +84,12 @@ extension Markdown.Rendering.Frame.Placeholder {
 
 extension Markdown.Rendering.Frame {
     struct CaptureState {
-        var actions: [Render_Primitives.Render.Action] = []
+        var actions: [Render.Render.Action] = []
         var childrenIndex: Int? = nil
     }
 }
 
-extension Render_Primitives.Render.Context {
+extension Render.Render.Context {
     static func frameCapturer(
         into state: Ownership.Mutable<Markdown.Rendering.Frame.CaptureState>
     ) -> Self {

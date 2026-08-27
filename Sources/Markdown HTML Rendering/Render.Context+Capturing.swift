@@ -1,5 +1,5 @@
-import Ownership_Mutable_Primitives
-import Render_Primitives
+import Ownership_Mutable
+import Render
 
 extension Render.Context {
 

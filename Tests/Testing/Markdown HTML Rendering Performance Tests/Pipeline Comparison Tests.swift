@@ -1,5 +1,5 @@
 import Markdown_HTML_Rendering
-import Render_Primitives
+import Render
 import SwiftMarkdown
 import Testing
 

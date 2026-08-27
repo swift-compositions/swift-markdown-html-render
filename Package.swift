@@ -31,8 +31,8 @@ extension Target.Dependency {
     static var appleSwiftMarkdown: Self {
         .product(name: "Markdown", package: "swift-markdown")
     }
-    static var ownershipMutablePrimitives: Self {
-        .product(name: "Ownership Mutable Primitives", package: "swift-ownership-primitives")
+    static var ownershipMutable: Self {
+        .product(name: "Ownership Mutable", package: "swift-ownership")
     }
     static var standardLibraryExtensions: Self {
         .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions")
@@ -55,12 +55,12 @@ let package = Package(
 
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-foundations/swift-html-render.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-css.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-css-html-layout-render.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-html-render.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-css.git", branch: "main"),
+        .package(url: "https://github.com/swift-compositions/swift-css-html-layout-render.git", branch: "main"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.4.0"),
-        .package(url: "https://github.com/swift-primitives/swift-ownership-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-standard-library-extensions.git", branch: "main"),
+        .package(url: "https://github.com/swift-molecules/swift-ownership.git", branch: "main"),
+        .package(url: "https://github.com/swift-molecules/swift-standard-library-extensions.git", branch: "main"),
 
     ],
     targets: [
@@ -78,7 +78,7 @@ let package = Package(
                 .cssTheming,
                 .cssHTMLLayoutRendering,
                 .swiftMarkdown,
-                .ownershipMutablePrimitives,
+                .ownershipMutable,
                 .standardLibraryExtensions,
             ]
         ),

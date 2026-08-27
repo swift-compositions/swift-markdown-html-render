@@ -61,7 +61,7 @@ let sections = Markdown.tableOfContents(from: """
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-foundations/swift-markdown-html-render.git", branch: "main")
+    .package(url: "https://github.com/swift-compositions/swift-markdown-html-render.git", branch: "main")
 ]
 ```
 
