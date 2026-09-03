@@ -2,44 +2,6 @@
 
 import PackageDescription
 
-extension String {
-    static let markdownHTMLRendering: Self = "Markdown HTML Rendering"
-    static let markdownPreviews: Self = "Markdown Previews"
-    static let swiftMarkdown: Self = "SwiftMarkdown"
-    var tests: Self { self + " Tests" }
-}
-
-extension Target.Dependency {
-    static var markdownHTMLRendering: Self { .target(name: .markdownHTMLRendering) }
-    static var markdownPreviews: Self { .target(name: .markdownPreviews) }
-    static var swiftMarkdown: Self { .target(name: .swiftMarkdown) }
-}
-
-extension Target.Dependency {
-    static var htmlRendering: Self {
-        .product(name: "HTML Rendering", package: "swift-html-render")
-    }
-    static var css: Self {
-        .product(name: "CSS", package: "swift-css")
-    }
-    static var cssTheming: Self {
-        .product(name: "CSS Theming", package: "swift-css")
-    }
-    static var cssHTMLLayoutRendering: Self {
-        .product(name: "CSS HTML Layout Rendering", package: "swift-css-html-layout-render")
-    }
-    static var appleSwiftMarkdown: Self {
-        .product(name: "Markdown", package: "swift-markdown")
-    }
-    static var ownershipMutable: Self {
-        .product(name: "Ownership Mutable", package: "swift-ownership")
-    }
-    static var standardLibraryExtensions: Self {
-        .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions")
-    }
-
-}
-
 let package = Package(
     name: "swift-markdown-html-render",
     platforms: [
@@ -50,8 +12,8 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: .markdownHTMLRendering, targets: [.markdownHTMLRendering]),
-        .library(name: .markdownPreviews, targets: [.markdownPreviews]),
+        .library(name: "Markdown HTML Rendering", targets: ["Markdown HTML Rendering"]),
+        .library(name: "Markdown Previews", targets: ["Markdown Previews"]),
 
     ],
     dependencies: [
@@ -65,34 +27,34 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: .swiftMarkdown,
+            name: "SwiftMarkdown",
             dependencies: [
-                .appleSwiftMarkdown,
+                .product(name: "Markdown", package: "swift-markdown"),
             ]
         ),
         .target(
-            name: .markdownHTMLRendering,
+            name: "Markdown HTML Rendering",
             dependencies: [
-                .htmlRendering,
-                .css,
-                .cssTheming,
-                .cssHTMLLayoutRendering,
-                .swiftMarkdown,
-                .ownershipMutable,
-                .standardLibraryExtensions,
+                .product(name: "HTML Rendering", package: "swift-html-render"),
+                .product(name: "CSS", package: "swift-css"),
+                .product(name: "CSS Theming", package: "swift-css"),
+                .product(name: "CSS HTML Layout Rendering", package: "swift-css-html-layout-render"),
+                .target(name: "SwiftMarkdown"),
+                .product(name: "Ownership Mutable", package: "swift-ownership"),
+                .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
             ]
         ),
         .target(
-            name: .markdownPreviews,
+            name: "Markdown Previews",
             dependencies: [
-                .markdownHTMLRendering,
+                .target(name: "Markdown HTML Rendering"),
             ]
         ),
 
         .testTarget(
-            name: .markdownHTMLRendering.tests,
+            name: "Markdown HTML Rendering Tests",
             dependencies: [
-                .markdownHTMLRendering,
+                .target(name: "Markdown HTML Rendering"),
             ],
             path: "Tests/Markdown HTML Rendering Tests"
         ),
