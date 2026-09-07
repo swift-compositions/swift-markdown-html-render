@@ -40,7 +40,7 @@ let package = Package(
                 .product(name: "CSS Theming", package: "swift-css"),
                 .product(name: "CSS HTML Layout Rendering", package: "swift-css-html-layout-render"),
                 .target(name: "SwiftMarkdown"),
-                .product(name: "Ownership Mutable", package: "swift-ownership"),
+                .product(name: "Ownership", package: "swift-ownership"),
                 .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
             ]
         ),

@@ -1,7 +1,7 @@
 import CSS_HTML_Rendering
 import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
-import Ownership_Mutable
+import Ownership
 import Render
 
 extension Markdown.Rendering {
