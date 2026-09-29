@@ -2,9 +2,9 @@ import HTML_Rendering
 
 extension Markdown.Rendering {
     public struct Table: Sendable {
-        public var render: @Sendable (Input) -> [Render.Action]
+        public var render: @Sendable (Input) -> [Renderer.Document.Action]
 
-        public init(render: @escaping @Sendable (Input) -> [Render.Action]) {
+        public init(render: @escaping @Sendable (Input) -> [Renderer.Document.Action]) {
             self.render = render
         }
     }
@@ -34,7 +34,7 @@ extension Markdown.Rendering.Table {
 extension Markdown.Rendering.Table {
     public static var `default`: Self {
         .init { input in
-            var actions: [Render.Action] = []
+            var actions: [Renderer.Document.Action] = []
             actions.append(
                 .push(.element(tagName: "table", isBlock: true, isVoid: false, isPreElement: false))
             )

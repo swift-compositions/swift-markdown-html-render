@@ -1,18 +1,18 @@
 import Ownership
-import Render
+import Renderer
 
-extension Render.Context {
+extension Renderer.Document.Context {
 
-    static func capturing(into buffer: Ownership.Mutable<[Render.Action]>) -> Self {
+    static func capturing(into buffer: Ownership.Mutable<[Renderer.Document.Action]>) -> Self {
         .init(
             text: { buffer.value.append(.text($0)) },
-            break: Render.Break(
+            break: Renderer.Document.Break(
                 line: { buffer.value.append(.break(.line)) },
                 thematic: { buffer.value.append(.break(.thematic)) },
                 page: { buffer.value.append(.break(.page)) }
             ),
             image: { buffer.value.append(.image(source: $0, alt: $1)) },
-            push: Render.Push(
+            push: Renderer.Document.Push(
                 block: { buffer.value.append(.push(.block(role: $0, style: $1))) },
                 inline: { buffer.value.append(.push(.inline(role: $0, style: $1))) },
                 list: { buffer.value.append(.push(.list(kind: $0, start: $1))) },
@@ -26,7 +26,7 @@ extension Render.Context {
                 },
                 style: { buffer.value.append(.push(.style)) }
             ),
-            pop: Render.Pop(
+            pop: Renderer.Document.Pop(
                 block: { buffer.value.append(.pop(.block)) },
                 inline: { buffer.value.append(.pop(.inline)) },
                 list: { buffer.value.append(.pop(.list)) },

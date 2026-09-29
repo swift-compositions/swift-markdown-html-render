@@ -1,5 +1,5 @@
 import Markdown_HTML_Rendering
-import Render
+import Renderer
 import SwiftMarkdown
 import Testing
 
@@ -79,7 +79,7 @@ extension `Performance Tests` {
         @Test(.timed(iterations: 20, warmup: 2))
         func `full action pipeline - 100 sections`() {
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             let view = Markdown_HTML_Rendering.Markdown { bookChapter }
             Markdown_HTML_Rendering.Markdown._render(view, context: &context)
         }
@@ -106,7 +106,7 @@ extension `Performance Tests` {
         func `full action pipeline - 500 sections`() {
             let content = generateBook(sections: 500)
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             let view = Markdown_HTML_Rendering.Markdown { content }
             Markdown_HTML_Rendering.Markdown._render(view, context: &context)
         }

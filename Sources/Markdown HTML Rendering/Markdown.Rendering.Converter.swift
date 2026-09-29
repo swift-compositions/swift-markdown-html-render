@@ -2,7 +2,7 @@ import CSS_HTML_Rendering
 import CSS_Theming
 import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
-import Render
+import Renderer
 import Standard_Library_Extensions
 
 extension Markdown.Rendering {
@@ -30,12 +30,12 @@ extension Markdown.Rendering {
 }
 
 extension Markdown.Rendering.Converter {
-    typealias Result = [Render.Action]
+    typealias Result = [Renderer.Document.Action]
 
     mutating func defaultVisit(
         _ markup: any SwiftMarkdown.Markup
-    ) -> [Render.Action] {
-        var actions: [Render.Action] = []
+    ) -> [Renderer.Document.Action] {
+        var actions: [Renderer.Document.Action] = []
         for child in markup.children {
             if previewOnly && tableOfContents.count > 1 { break }
             actions.append(contentsOf: visit(child))
@@ -45,17 +45,17 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitText(
         _ text: SwiftMarkdown.Text
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         rendering.text.render(.init(text: text.string))
     }
 
     mutating func visitHeading(
         _ heading: SwiftMarkdown.Heading
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         let slug = generateSlug(for: heading.plainText)
         currentSection = (title: heading.plainText, id: slug, level: heading.level)
 
-        var childActions: [Render.Action] = []
+        var childActions: [Renderer.Document.Action] = []
         for child in heading.children {
             childActions.append(contentsOf: visit(child))
         }
@@ -72,8 +72,8 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitParagraph(
         _ paragraph: SwiftMarkdown.Paragraph
-    ) -> [Render.Action] {
-        var childActions: [Render.Action] = []
+    ) -> [Renderer.Document.Action] {
+        var childActions: [Renderer.Document.Action] = []
         for child in paragraph.children {
             childActions.append(contentsOf: visit(child))
         }
@@ -82,7 +82,7 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitCodeBlock(
         _ codeBlock: SwiftMarkdown.CodeBlock
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         let languageInfo: (language: String?, highlightLines: String?)
         if let lang = codeBlock.language {
             let parts = lang.split(separator: ":", maxSplits: 2)
@@ -105,12 +105,12 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitBlockQuote(
         _ blockQuote: SwiftMarkdown.BlockQuote
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         let aside = SwiftMarkdown.Aside(blockQuote)
         let kind = aside.kind.displayName
         let diagnosticLevel = configuration.style.diagnostic.level(aside.kind.rawValue)
 
-        var childActions: [Render.Action] = []
+        var childActions: [Renderer.Document.Action] = []
         for child in aside.content {
             childActions.append(contentsOf: visit(child))
         }
@@ -127,8 +127,8 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitEmphasis(
         _ emphasis: SwiftMarkdown.Emphasis
-    ) -> [Render.Action] {
-        var childActions: [Render.Action] = []
+    ) -> [Renderer.Document.Action] {
+        var childActions: [Renderer.Document.Action] = []
         for child in emphasis.children {
             childActions.append(contentsOf: visit(child))
         }
@@ -137,8 +137,8 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitStrong(
         _ strong: SwiftMarkdown.Strong
-    ) -> [Render.Action] {
-        var childActions: [Render.Action] = []
+    ) -> [Renderer.Document.Action] {
+        var childActions: [Renderer.Document.Action] = []
         for child in strong.children {
             childActions.append(contentsOf: visit(child))
         }
@@ -147,8 +147,8 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitStrikethrough(
         _ strikethrough: SwiftMarkdown.Strikethrough
-    ) -> [Render.Action] {
-        var childActions: [Render.Action] = []
+    ) -> [Renderer.Document.Action] {
+        var childActions: [Renderer.Document.Action] = []
         for child in strikethrough.children {
             childActions.append(contentsOf: visit(child))
         }
@@ -157,14 +157,14 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitInlineCode(
         _ inlineCode: SwiftMarkdown.InlineCode
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         rendering.inlineCode.render(.init(code: inlineCode.code))
     }
 
     mutating func visitLink(
         _ link: SwiftMarkdown.Link
-    ) -> [Render.Action] {
-        var childActions: [Render.Action] = []
+    ) -> [Renderer.Document.Action] {
+        var childActions: [Renderer.Document.Action] = []
         for child in link.children {
             childActions.append(contentsOf: visit(child))
         }
@@ -179,7 +179,7 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitImage(
         _ image: SwiftMarkdown.Image
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         rendering.image.render(
             .init(
                 source: image.source,
@@ -191,8 +191,8 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitOrderedList(
         _ orderedList: SwiftMarkdown.OrderedList
-    ) -> [Render.Action] {
-        var childActions: [Render.Action] = []
+    ) -> [Renderer.Document.Action] {
+        var childActions: [Renderer.Document.Action] = []
         for child in orderedList.children {
             childActions.append(contentsOf: visit(child))
         }
@@ -201,8 +201,8 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitUnorderedList(
         _ unorderedList: SwiftMarkdown.UnorderedList
-    ) -> [Render.Action] {
-        var childActions: [Render.Action] = []
+    ) -> [Renderer.Document.Action] {
+        var childActions: [Renderer.Document.Action] = []
         for child in unorderedList.children {
             childActions.append(contentsOf: visit(child))
         }
@@ -211,8 +211,8 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitListItem(
         _ listItem: SwiftMarkdown.ListItem
-    ) -> [Render.Action] {
-        var childActions: [Render.Action] = []
+    ) -> [Renderer.Document.Action] {
+        var childActions: [Renderer.Document.Action] = []
         for child in listItem.children {
             childActions.append(contentsOf: visit(child))
         }
@@ -221,14 +221,14 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitTable(
         _ table: SwiftMarkdown.Table
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         let headActions = render(
             tagName: "th",
             cells: table.head.cells,
             columnAlignments: table.columnAlignments
         )
 
-        var bodyActions: [Render.Action] = []
+        var bodyActions: [Renderer.Document.Action] = []
         for row in table.body.rows {
             let rowCells = render(
                 tagName: "td",
@@ -258,8 +258,8 @@ extension Markdown.Rendering.Converter {
         tagName: String,
         cells: some Swift.Sequence<SwiftMarkdown.Table.Cell>,
         columnAlignments: [SwiftMarkdown.Table.ColumnAlignment?]
-    ) -> [Render.Action] {
-        var actions: [Render.Action] = []
+    ) -> [Renderer.Document.Action] {
+        var actions: [Renderer.Document.Action] = []
         var column = 0
         for cell in cells {
             if cell.colspan > 0 && cell.rowspan > 0 {
@@ -294,37 +294,37 @@ extension Markdown.Rendering.Converter {
 
     mutating func visitLineBreak(
         _ lineBreak: SwiftMarkdown.LineBreak
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         rendering.lineBreak.render()
     }
 
     mutating func visitSoftBreak(
         _ softBreak: SwiftMarkdown.SoftBreak
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         rendering.softBreak.render()
     }
 
     mutating func visitThematicBreak(
         _ thematicBreak: SwiftMarkdown.ThematicBreak
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         rendering.thematicBreak.render()
     }
 
     mutating func visitHTMLBlock(
         _ html: SwiftMarkdown.HTMLBlock
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         [.raw(Array(html.rawHTML.utf8))]
     }
 
     mutating func visitInlineHTML(
         _ inlineHTML: SwiftMarkdown.InlineHTML
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
         [.raw(Array(inlineHTML.rawHTML.utf8))]
     }
 
     mutating func visitBlockDirective(
         _ blockDirective: SwiftMarkdown.BlockDirective
-    ) -> [Render.Action] {
+    ) -> [Renderer.Document.Action] {
 
         if blockDirective.name == "T" {
             let segments = blockDirective.argumentText.segments
@@ -355,7 +355,7 @@ extension Markdown.Rendering.Converter {
         }
 
         var mutableSelf = self
-        var childActions: [Render.Action] = []
+        var childActions: [Renderer.Document.Action] = []
         for child in blockDirective.children {
             childActions.append(contentsOf: mutableSelf.visit(child))
         }

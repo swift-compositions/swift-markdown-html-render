@@ -2,7 +2,7 @@ import CSS_HTML_Rendering
 import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
 import Ownership
-import Render
+import Renderer
 
 extension Markdown.Rendering {
 
@@ -14,7 +14,7 @@ extension Markdown.Rendering {
 
         public init<V: HTML.View>(@HTML.Builder _ content: () -> V) {
             let state = Ownership.Mutable(CaptureState())
-            var context = Render.Render.Context.frameCapturer(into: state)
+            var context = Renderer.Document.Render.Context.frameCapturer(into: state)
             context.render(content())
 
             guard let splitIndex = state.value.childrenIndex else {
@@ -75,7 +75,7 @@ extension Markdown.Rendering.Frame.Placeholder {
 
     public static func _render(
         _ view: borrowing Self,
-        context: inout Render.Render.Context
+        context: inout Renderer.Document.Render.Context
     ) {
 
         context.splice([])
@@ -84,24 +84,24 @@ extension Markdown.Rendering.Frame.Placeholder {
 
 extension Markdown.Rendering.Frame {
     struct CaptureState {
-        var actions: [Render.Render.Action] = []
+        var actions: [Renderer.Document.Render.Action] = []
         var childrenIndex: Int? = nil
     }
 }
 
-extension Render.Render.Context {
+extension Renderer.Document.Render.Context {
     static func frameCapturer(
         into state: Ownership.Mutable<Markdown.Rendering.Frame.CaptureState>
     ) -> Self {
         .init(
             text: { state.value.actions.append(.text($0)) },
-            break: Render.Break(
+            break: Renderer.Document.Break(
                 line: { state.value.actions.append(.break(.line)) },
                 thematic: { state.value.actions.append(.break(.thematic)) },
                 page: { state.value.actions.append(.break(.page)) }
             ),
             image: { state.value.actions.append(.image(source: $0, alt: $1)) },
-            push: Render.Push(
+            push: Renderer.Document.Push(
                 block: { state.value.actions.append(.push(.block(role: $0, style: $1))) },
                 inline: { state.value.actions.append(.push(.inline(role: $0, style: $1))) },
                 list: { state.value.actions.append(.push(.list(kind: $0, start: $1))) },
@@ -115,7 +115,7 @@ extension Render.Render.Context {
                 },
                 style: { state.value.actions.append(.push(.style)) }
             ),
-            pop: Render.Pop(
+            pop: Renderer.Document.Pop(
                 block: { state.value.actions.append(.pop(.block)) },
                 inline: { state.value.actions.append(.pop(.inline)) },
                 list: { state.value.actions.append(.pop(.list)) },

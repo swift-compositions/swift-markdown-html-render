@@ -1,5 +1,5 @@
 import Markdown_HTML_Rendering
-import Render
+import Renderer
 import Testing
 
 private let simpleMarkdown = """
@@ -66,7 +66,7 @@ extension `Performance Tests` {
         @Test(.timed(iterations: 200, warmup: 20))
         func `action path - simple document`() {
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             let view = Markdown { simpleMarkdown }
             Markdown._render(view, context: &context)
         }
@@ -80,7 +80,7 @@ extension `Performance Tests` {
         @Test(.timed(iterations: 100, warmup: 10))
         func `action path - medium document`() {
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             let view = Markdown { mediumMarkdown }
             Markdown._render(view, context: &context)
         }
@@ -94,7 +94,7 @@ extension `Performance Tests` {
         @Test(.timed(iterations: 20, warmup: 2))
         func `action path - large document`() {
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             let view = Markdown { largeMarkdown }
             Markdown._render(view, context: &context)
         }
@@ -108,7 +108,7 @@ extension `Performance Tests` {
         @Test(.timed(iterations: 500, warmup: 50))
         func `action throughput - simple`() {
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             let view = Markdown { simpleMarkdown }
             Markdown._render(view, context: &context)
         }
@@ -116,7 +116,7 @@ extension `Performance Tests` {
         @Test(.timed(iterations: 50, warmup: 5))
         func `action throughput - medium`() {
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             let view = Markdown { mediumMarkdown }
             Markdown._render(view, context: &context)
         }
@@ -129,7 +129,7 @@ extension `Performance Tests` {
         @Test(.timed(iterations: 5, warmup: 1))
         func `action path - extreme 100 sections`() {
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             let view = Markdown { extremeMarkdown }
             Markdown._render(view, context: &context)
         }
@@ -140,7 +140,7 @@ extension `Performance Tests` {
         )
         func `action path - extreme 500 sections`() {
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             let view = Markdown { massiveMarkdown }
             Markdown._render(view, context: &context)
         }
@@ -149,7 +149,7 @@ extension `Performance Tests` {
         func `action path - extreme 1000 sections does not crash`() {
             let content = generateMarkdown(sections: 1000)
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
-            var context = Render.Context.html(state: state)
+            var context = Renderer.Document.Context.html(state: state)
             let view = Markdown { content }
             Markdown._render(view, context: &context)
 

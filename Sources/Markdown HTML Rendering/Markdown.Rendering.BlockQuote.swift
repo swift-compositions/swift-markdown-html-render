@@ -7,9 +7,9 @@ import SwiftMarkdown
 
 extension Markdown.Rendering {
     public struct BlockQuote: Sendable {
-        public var render: @Sendable (Input) -> [Render.Action]
+        public var render: @Sendable (Input) -> [Renderer.Document.Action]
 
-        public init(render: @escaping @Sendable (Input) -> [Render.Action]) {
+        public init(render: @escaping @Sendable (Input) -> [Renderer.Document.Action]) {
             self.render = render
         }
     }

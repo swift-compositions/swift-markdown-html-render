@@ -1,10 +1,10 @@
 @_spi(DynamicHTML) import HTML_Rendering_Core
-import Render
+import Renderer
 
 extension Markdown.Rendering {
 
     struct Replay: HTML.View, Sendable {
-        let actions: [Render.Render.Action]
+        let actions: [Renderer.Document.Render.Action]
     }
 }
 
@@ -13,7 +13,7 @@ extension Markdown.Rendering.Replay {
 
     static func _render(
         _ view: borrowing Self,
-        context: inout Render.Render.Context
+        context: inout Renderer.Document.Render.Context
     ) {
         context.splice(view.actions)
     }

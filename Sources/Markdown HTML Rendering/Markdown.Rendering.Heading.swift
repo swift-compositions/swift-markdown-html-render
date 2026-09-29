@@ -5,9 +5,9 @@ import HTML_Rendering
 
 extension Markdown.Rendering {
     public struct Heading: Sendable {
-        public var render: @Sendable (Input) -> [Render.Action]
+        public var render: @Sendable (Input) -> [Renderer.Document.Action]
 
-        public init(render: @escaping @Sendable (Input) -> [Render.Action]) {
+        public init(render: @escaping @Sendable (Input) -> [Renderer.Document.Action]) {
             self.render = render
         }
     }
@@ -36,7 +36,7 @@ extension Markdown.Rendering.Heading {
 
 extension Markdown.Rendering.Heading {
 
-    private static let anchorTemplate: [Render.Action] = Markdown.Rendering.capture {
+    private static let anchorTemplate: [Renderer.Document.Action] = Markdown.Rendering.capture {
         HTML.Anchor.Element {}
             .id("__HEADING_SLUG__")
             .css
@@ -61,7 +61,7 @@ extension Markdown.Rendering.Heading {
         .position(.relative)
     }
 
-    private static let linkIconTemplate: [Render.Action] = Markdown.Rendering.capture {
+    private static let linkIconTemplate: [Renderer.Document.Action] = Markdown.Rendering.capture {
         HTML.Anchor.Element(href: .init(value: "__HEADING_SLUG__")) {
             LinkIcon()
         }
@@ -75,7 +75,7 @@ extension Markdown.Rendering.Heading {
         .width(Width.rem(2.5))
     }
 
-    private static let headingColorTemplate: [Render.Action] = {
+    private static let headingColorTemplate: [Renderer.Document.Action] = {
 
         Markdown.Rendering.capture {
             tag("h1") {}
@@ -91,7 +91,7 @@ extension Markdown.Rendering.Heading {
 
     public static var `default`: Self {
         .init { input in
-            var actions: [Render.Action] = []
+            var actions: [Renderer.Document.Action] = []
 
             for action in anchorTemplate {
                 if case .attribute(set: "id", value: "__HEADING_SLUG__") = action {
@@ -101,7 +101,7 @@ extension Markdown.Rendering.Heading {
                 }
             }
 
-            var content: [Render.Action] = []
+            var content: [Renderer.Document.Action] = []
 
             content.append(contentsOf: headingColorTemplate)
             content.append(

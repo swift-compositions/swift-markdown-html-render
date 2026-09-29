@@ -4,9 +4,9 @@ import HTML_Rendering
 
 extension Markdown.Rendering {
     public struct CodeBlock: Sendable {
-        public var render: @Sendable (Input) -> [Render.Action]
+        public var render: @Sendable (Input) -> [Renderer.Document.Action]
 
-        public init(render: @escaping @Sendable (Input) -> [Render.Action]) {
+        public init(render: @escaping @Sendable (Input) -> [Renderer.Document.Action]) {
             self.render = render
         }
     }
@@ -42,7 +42,7 @@ extension Markdown.Rendering.CodeBlock {
 
     public static var `default`: Self {
         .init { input in
-            var inner: [Render.Action] = []
+            var inner: [Renderer.Document.Action] = []
             if let lang = input.language {
                 inner.append(.attribute(set: "class", value: "language-\(lang)"))
             }
@@ -52,7 +52,7 @@ extension Markdown.Rendering.CodeBlock {
             inner.append(.text(input.code))
             inner.append(.pop(.element(isBlock: false)))
 
-            var attributes: [Render.Action] = []
+            var attributes: [Renderer.Document.Action] = []
             if let highlightLines = input.highlightLines {
                 attributes.append(.attribute(set: "data-line", value: highlightLines))
             }

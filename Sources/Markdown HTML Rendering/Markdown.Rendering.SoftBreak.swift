@@ -1,8 +1,8 @@
 extension Markdown.Rendering {
     public struct SoftBreak: Sendable {
-        public var render: @Sendable () -> [Render.Action]
+        public var render: @Sendable () -> [Renderer.Document.Action]
 
-        public init(render: @escaping @Sendable () -> [Render.Action]) {
+        public init(render: @escaping @Sendable () -> [Renderer.Document.Action]) {
             self.render = render
         }
     }

@@ -2,9 +2,9 @@ import HTML_Rendering
 
 extension Markdown.Rendering {
     public struct Emphasis: Sendable {
-        public var render: @Sendable (Input) -> [Render.Action]
+        public var render: @Sendable (Input) -> [Renderer.Document.Action]
 
-        public init(render: @escaping @Sendable (Input) -> [Render.Action]) {
+        public init(render: @escaping @Sendable (Input) -> [Renderer.Document.Action]) {
             self.render = render
         }
     }

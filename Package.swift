@@ -21,7 +21,7 @@ let package = Package(
         .package(url: "https://github.com/swift-compositions/swift-css.git", branch: "main"),
         .package(url: "https://github.com/swift-compositions/swift-css-html-layout-render.git", branch: "main"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.4.0"),
-        .package(url: "https://github.com/swift-molecules/swift-ownership.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-ownership.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-standard-library-extensions.git", branch: "main"),
 
     ],

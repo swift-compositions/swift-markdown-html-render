@@ -1,8 +1,8 @@
-import Render
+import Renderer
 
-extension Render.Context {
+extension Renderer.Document.Context {
 
-    mutating func interpret(markdown actions: [Render.Action]) {
+    mutating func interpret(markdown actions: [Renderer.Document.Action]) {
         for action in actions {
             switch action {
             case .style(let declaration, let atRule, let selector, let pseudo):
