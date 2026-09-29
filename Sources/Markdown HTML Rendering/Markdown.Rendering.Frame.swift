@@ -14,7 +14,7 @@ extension Markdown.Rendering {
 
         public init<V: HTML.View>(@HTML.Builder _ content: () -> V) {
             let state = Ownership.Mutable(CaptureState())
-            var context = Renderer.Document.Render.Context.frameCapturer(into: state)
+            var context = Renderer::Renderer.Document.Context.frameCapturer(into: state)
             context.render(content())
 
             guard let splitIndex = state.value.childrenIndex else {
@@ -75,7 +75,7 @@ extension Markdown.Rendering.Frame.Placeholder {
 
     public static func _render(
         _ view: borrowing Self,
-        context: inout Renderer.Document.Render.Context
+        context: inout Renderer::Renderer.Document.Context
     ) {
 
         context.splice([])
@@ -84,12 +84,12 @@ extension Markdown.Rendering.Frame.Placeholder {
 
 extension Markdown.Rendering.Frame {
     struct CaptureState {
-        var actions: [Renderer.Document.Render.Action] = []
+        var actions: [Renderer::Renderer.Document.Action] = []
         var childrenIndex: Int? = nil
     }
 }
 
-extension Renderer.Document.Render.Context {
+extension Renderer::Renderer.Document.Context {
     static func frameCapturer(
         into state: Ownership.Mutable<Markdown.Rendering.Frame.CaptureState>
     ) -> Self {

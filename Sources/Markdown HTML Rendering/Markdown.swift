@@ -54,7 +54,7 @@ extension Markdown {
 
     public static func _render(
         _ view: borrowing Self,
-        context: inout Renderer.Document.Render.Context
+        context: inout Renderer::Renderer.Document.Context
     ) {
         let document = SwiftMarkdown.Document(
             parsing: view.markdownString,

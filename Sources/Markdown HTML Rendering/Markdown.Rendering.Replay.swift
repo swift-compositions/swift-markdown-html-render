@@ -4,7 +4,7 @@ import Renderer
 extension Markdown.Rendering {
 
     struct Replay: HTML.View, Sendable {
-        let actions: [Renderer.Document.Render.Action]
+        let actions: [Renderer::Renderer.Document.Action]
     }
 }
 
@@ -13,7 +13,7 @@ extension Markdown.Rendering.Replay {
 
     static func _render(
         _ view: borrowing Self,
-        context: inout Renderer.Document.Render.Context
+        context: inout Renderer::Renderer.Document.Context
     ) {
         context.splice(view.actions)
     }
