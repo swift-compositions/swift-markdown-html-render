@@ -313,13 +313,13 @@ extension Markdown.Rendering.Converter {
     mutating func visitHTMLBlock(
         _ html: SwiftMarkdown.HTMLBlock
     ) -> [Renderer.Document.Action] {
-        [.raw(Array(html.rawHTML.utf8))]
+        [.raw(html.rawHTML.utf8.map { .init(bitPattern: $0) })]
     }
 
     mutating func visitInlineHTML(
         _ inlineHTML: SwiftMarkdown.InlineHTML
     ) -> [Renderer.Document.Action] {
-        [.raw(Array(inlineHTML.rawHTML.utf8))]
+        [.raw(inlineHTML.rawHTML.utf8.map { .init(bitPattern: $0) })]
     }
 
     mutating func visitBlockDirective(
