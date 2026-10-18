@@ -29,7 +29,7 @@ let package = Package(
         .target(
             name: "SwiftMarkdown",
             dependencies: [
-                .product(name: "Markdown", package: "swift-markdown"),
+                .product(name: "Markdown", package: "swift-markdown")
             ]
         ),
         .target(
@@ -47,14 +47,14 @@ let package = Package(
         .target(
             name: "Markdown Previews",
             dependencies: [
-                .target(name: "Markdown HTML Rendering"),
+                .target(name: "Markdown HTML Rendering")
             ]
         ),
 
         .testTarget(
             name: "Markdown HTML Rendering Tests",
             dependencies: [
-                .target(name: "Markdown HTML Rendering"),
+                .target(name: "Markdown HTML Rendering")
             ],
             path: "Tests/Markdown HTML Rendering Tests"
         ),

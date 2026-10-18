@@ -6,8 +6,7 @@ import HTML_Rendering
 extension Markdown.Configuration {
 
     public struct Directives: Sendable {
-        public var handler:
-            @Sendable (Directive) -> Markdown.Configuration.Directives.Directive.Result
+        public var handler: @Sendable (Directive) -> Markdown.Configuration.Directives.Directive.Result
 
         public init(
             _ handler:

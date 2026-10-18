@@ -39,16 +39,7 @@ extension Markdown.Rendering.BlockQuote {
 extension Markdown.Rendering.BlockQuote {
     public static var `default`: Self {
         .init { input in
-            if let level = input.diagnosticLevel {
-                return Markdown.Rendering.capture {
-                    Markdown.Diagnostic(level: level) {
-                        Markdown.Rendering.Replay(actions: input.children)
-                    }
-                    .css
-                    .paddingLeft(PaddingLeft.rem(1))
-                    .paddingRight(PaddingRight.rem(1))
-                }
-            } else {
+            guard let level = input.diagnosticLevel else {
                 let style = SwiftMarkdown.BlockQuote.Style(blockName: input.kind)
                 return Markdown.Rendering.capture {
                     HTML.BlockQuote.Element {
@@ -70,6 +61,14 @@ extension Markdown.Rendering.BlockQuote {
                     .margin(Margin.sides(vertical: .rem(0.5), horizontal: .zero))
                     .padding(Padding.sides(vertical: .rem(1), horizontal: .rem(1.5)))
                 }
+            }
+            return Markdown.Rendering.capture {
+                Markdown.Diagnostic(level: level) {
+                    Markdown.Rendering.Replay(actions: input.children)
+                }
+                .css
+                .paddingLeft(PaddingLeft.rem(1))
+                .paddingRight(PaddingRight.rem(1))
             }
         }
     }
