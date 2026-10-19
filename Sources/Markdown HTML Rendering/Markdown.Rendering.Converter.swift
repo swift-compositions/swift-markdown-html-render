@@ -412,9 +412,8 @@ extension Markdown.Rendering.Converter {
             remaining = remaining[remaining.index(after: colonIndex)...]
 
             remaining = remaining.drop { $0.isWhitespace }
-            guard !remaining.isEmpty else { break }
+            guard let firstChar = remaining.first else { break }
 
-            let firstChar = remaining.first!
             if firstChar == "\"" || firstChar == "'" {
                 let quote = firstChar
                 remaining = remaining.dropFirst()
