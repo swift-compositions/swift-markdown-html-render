@@ -1,101 +1,17 @@
 # swift-markdown-html-render
 
-![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
+Use this package when you write content in Markdown and want it inside an HTML page built with swift-html-render, as a view rather than an HTML string. Start from `Markdown`, which renders as an `HTML.View`. Change how an element renders with `Markdown.Rendering`, and change directives, slugs and diagnostic styles with `Markdown.Configuration`. If the output is a PDF, use swift-pdf instead.
 
-Renders Markdown to HTML as composable `HTML.View` values, with customizable per-element rendering, heading slugs, block directives, and table-of-contents extraction.
+## Laws
 
----
-
-## Key Features
-
-- **Renders to an `HTML.View`** — Markdown becomes a typed HTML view that composes inside any HTML document tree, not just a flat string.
-- **Per-element rendering** — Override how headings, paragraphs, code blocks, lists, tables, and inline elements render through `Markdown.Rendering`.
-- **Configurable heading slugs** — `Markdown.Configuration.SlugGenerator` offers `.default`, `.prefixed(_:)`, and `.custom(_:)` strategies, deduplicated across a document.
-- **Block directives** — Handle custom `@Name(...)` directives with your own renderer via `Markdown.Configuration.Directives`.
-- **Table of contents** — `Markdown.tableOfContents(from:)` extracts headings as `Section` values carrying id, level, and timestamp.
-- **Transcript timestamps** — `@T(0:00) Speaker` directives parse into `Timestamp` values for time-coded content.
-- **GitHub-flavored elements** — Tables, strikethrough, fenced code blocks with language and line-highlight info, and block-quote asides mapped to diagnostic levels.
-
----
-
-## Quick Start
-
-Markdown renders to a typed `HTML.View`, so it composes directly inside an HTML document alongside the rest of your view tree:
-
-```swift
-import Markdown_HTML_Rendering
-
-let html = try String(
-    Markdown {
-        """
-        # Changelog
-
-        Version 2 adds **typed throws** end to end.
-
-        - Composes into any HTML view tree
-        - Custom per-element rendering
-        """
-    }
-)
-```
-
-Headings followed by a `@T(...)` timestamp directive are collected into a table of contents:
-
-```swift
-let sections = Markdown.tableOfContents(from: """
-    # Intro
-    @T(0:00)
-    Welcome.
-
-    # Deep Dive
-    @T(2:15)
-    Details.
-    """)
-// sections[0].id == "intro"
-// sections[0].timestamp?.duration == 0
-```
-
----
-
-## Installation
-
-```swift
-dependencies: [
-    .package(url: "https://github.com/swift-compositions/swift-markdown-html-render.git", branch: "main")
-]
-```
-
-```swift
-.target(
-    name: "YourTarget",
-    dependencies: [
-        .product(name: "Markdown HTML Rendering", package: "swift-markdown-html-render")
-    ]
-)
-```
-
-Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26.
-
----
-
-## Architecture
-
-Three library products. Importing `Markdown HTML Rendering` also brings the HTML rendering, CSS, and `SwiftMarkdown` parse types into scope.
-
-| Product | When to import |
-|---------|----------------|
-| `Markdown HTML Rendering` | Rendering Markdown to HTML — the `Markdown` view, `Markdown.Configuration`, `Markdown.Rendering`, and `Markdown.tableOfContents(from:)`. |
-| `Markdown HTML Rendering Test Support` | Test targets that render Markdown and assert against the output; re-exports the main module and Swift Testing. |
-| `Markdown Previews` | Xcode `#Preview` gallery of rendered Markdown elements (SwiftUI; macOS and iOS only). |
-
----
-
-## Community
-
-<!-- BEGIN: discussion -->
-*Discussion thread will be created at first public release.*
-<!-- END: discussion -->
-
-## License
-
-Apache 2.0. See [LICENSE](LICENSE.md).
+- Markdown is parsed with block directives enabled. `@Comment` renders nothing. `@Button` renders its children as a link to its raw argument text. `@Video` reads its `source` and `poster` arguments. A directive no handler renders is replaced by its children.
+- `Markdown.Configuration.Directives.adding(_:)` asks the receiver first and the added handler only when the receiver answers `useDefault`.
+- Directive arguments are read as `key: value` pairs separated by commas or spaces. A value may be quoted with single or double quotes. Reading stops at the first piece without a colon.
+- Every heading gets an anchor id from the slug generator. The default slug is the heading text split on anything that isn't a letter or digit, joined with hyphens and lowercased, so text with only punctuation gives an empty slug. A slug already used in the same document gets `-1`, `-2` and so on, and `Markdown.Configuration.SlugGenerator.prefixed(_:)` puts the prefix before that suffix.
+- `Markdown.tableOfContents(from:configuration:rendering:)` lists only headings that are followed by a `@T` directive before the next heading. A heading without one is left out, though it still gets its slug.
+- A `@T` directive takes a time and an optional speaker separated by a comma and a space. The time is seconds, minutes and seconds, or hours, minutes and seconds, separated by colons. The rendered anchor id is `t` followed by the total number of seconds. Minutes are zero padded only when there are hours.
+- A block quote whose aside kind the diagnostic style recognises renders as a diagnostic. By default those kinds are Error, Expected Failure, Failed, Runtime Warning and Warning. Any other block quote renders as a quote titled with its kind.
+- A fenced code block's info string is read as a language, then an optional colon and the lines to highlight. The language becomes the class `language-` plus its name, and the lines go in the `data-line` attribute.
+- HTML blocks and inline HTML in the Markdown are written to the output as they are, without escaping.
+- A soft line break renders as a space. A link without a destination points to `#`.
+- `String.init(markdown:)` joins its lines with single newlines. `String.init(markdownWithParagraphs:)` drops empty lines and joins the rest with blank lines. `String.init(markdownSections:)` treats empty lines as section breaks and separates sections with one blank line.
