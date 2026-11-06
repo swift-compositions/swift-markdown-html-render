@@ -1,7 +1,9 @@
 import Markdown_HTML_Rendering
 import Testing
 
-extension Markdown {
+enum `Markdown Tests` {}
+
+extension `Markdown Tests` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct EdgeCase {}

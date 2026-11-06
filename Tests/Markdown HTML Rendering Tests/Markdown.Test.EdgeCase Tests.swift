@@ -1,7 +1,7 @@
 import Markdown_HTML_Rendering
 import Testing
 
-extension Markdown.Test.EdgeCase {
+extension `Markdown Tests`.Test.EdgeCase {
     @Suite
     struct `SlugGeneration` {
         @Test

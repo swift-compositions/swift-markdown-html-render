@@ -1,7 +1,7 @@
 import Markdown_HTML_Rendering
 import Testing
 
-extension Markdown.Test.Unit {
+extension `Markdown Tests`.Test.Unit {
     @Suite
     struct `PlainTextWalker` {
         @Test

@@ -1,7 +1,7 @@
 import Markdown_HTML_Rendering
 import Testing
 
-extension Markdown.Test.Integration {
+extension `Markdown Tests`.Test.Integration {
     @Suite
     struct `TableOfContents` {
         @Test
