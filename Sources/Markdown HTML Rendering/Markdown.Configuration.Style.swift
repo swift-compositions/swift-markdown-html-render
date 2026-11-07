@@ -26,6 +26,14 @@ extension Markdown.Configuration.Style {
 }
 
 extension Markdown.Configuration.Style {
+
+    public struct DiagnosticStyle: Sendable {
+        public var level: @Sendable (_ name: String) -> Markdown.Diagnostic.Level?
+
+        public init(_ level: @escaping @Sendable (_ name: String) -> Markdown.Diagnostic.Level?) {
+            self.level = level
+        }
+    }
 }
 
 extension Markdown.Configuration.Style.DiagnosticStyle {
@@ -51,6 +59,22 @@ extension Markdown.Configuration.Style.DiagnosticStyle {
 }
 
 extension Markdown.Configuration.Style {
+
+    public struct BlockQuoteStyle: Sendable {
+        public var style:
+            @Sendable (_ name: String) -> (
+                backgroundColor: DarkModeColor, borderColor: DarkModeColor
+            )
+
+        public init(
+            _ style:
+                @escaping @Sendable (_ name: String) -> (
+                    backgroundColor: DarkModeColor, borderColor: DarkModeColor
+                )
+        ) {
+            self.style = style
+        }
+    }
 }
 
 extension Markdown.Configuration.Style.BlockQuoteStyle {
@@ -87,10 +111,27 @@ extension Markdown.Configuration.Style.BlockQuoteStyle {
 }
 
 extension Markdown.Configuration.Style {
+
+    public struct Icons: Sendable {
+        public var link: @Sendable () -> HTML.AnyView
+        public var diagnostic: @Sendable (DiagnosticIconKind) -> HTML.AnyView
+
+        public init(
+            link: @escaping @Sendable () -> HTML.AnyView,
+            diagnostic: @escaping @Sendable (DiagnosticIconKind) -> HTML.AnyView
+        ) {
+            self.link = link
+            self.diagnostic = diagnostic
+        }
+    }
 }
 
 extension Markdown.Configuration.Style.Icons {
-
+    public enum DiagnosticIconKind: Sendable {
+        case error
+        case failure
+        case warning
+    }
 
     public static var `default`: Self {
         .init(
