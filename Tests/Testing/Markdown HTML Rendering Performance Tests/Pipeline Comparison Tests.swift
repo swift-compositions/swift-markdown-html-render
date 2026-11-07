@@ -63,7 +63,6 @@ private let bookChapter: String = {
 extension `Performance Tests` {
     @Suite(.serialized)
     struct `Pipeline Comparison` {
-
         @Test(.timed(iterations: 20, warmup: 2))
         func `parse only - 100 sections`() {
             let _ = SwiftMarkdown.Document(parsing: bookChapter, options: .parseBlockDirectives)
@@ -262,7 +261,7 @@ private struct BareHTMLVisitor: SwiftMarkdown.MarkupVisitor {
 
 private func generateBook(sections: Int) -> String {
     var parts: [String] = ["# Book Title"]
-    for i in 1...sections {
+    (1...sections).forEach { i in
         parts.append(
             """
             ## Section \(i)

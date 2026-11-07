@@ -62,7 +62,6 @@ private let largeMarkdown: String = {
 extension `Performance Tests` {
     @Suite(.serialized)
     struct `Action Rendering` {
-
         @Test(.timed(iterations: 200, warmup: 20))
         func `action path - simple document`() {
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
@@ -168,7 +167,7 @@ private let massiveMarkdown: String = {
 
 private func generateMarkdown(sections: Int) -> String {
     var parts: [String] = ["# Stress Test Document"]
-    for i in 1...sections {
+    (1...sections).forEach { i in
         parts.append(
             """
             ## Section \(i)

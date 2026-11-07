@@ -7,7 +7,7 @@ extension `Performance Tests` {
         @Test(.timed(threshold: .seconds(5)))
         func `generate slugs from varied headings`() {
             let gen = Markdown.Configuration.SlugGenerator.default
-            for i in 0..<1_000 {
+            (0..<1_000).forEach { i in
                 let input = Markdown.Configuration.SlugGenerator.Input(
                     text: "Heading Number \(i)",
                     existingSlugs: []
