@@ -5,7 +5,7 @@ import HTML_Rendering
 @_spi(DynamicHTML) public import HTML_Rendering_Core
 import Renderer
 
-public struct Markdown: HTML_Rendering_Core.HTML.View {
+public struct Markdown: HTML_Rendering_Core::HTML.View {
     let markdownString: String
     let configuration: Configuration
     let rendering: Rendering

@@ -80,13 +80,13 @@ extension `Performance Tests` {
         func `full action pipeline - 100 sections`() {
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
             var context = Renderer.Document.Context.html(state: state)
-            let view = Markdown_HTML_Rendering.Markdown { bookChapter }
-            Markdown_HTML_Rendering.Markdown._render(view, context: &context)
+            let view = Markdown_HTML_Rendering::Markdown { bookChapter }
+            Markdown_HTML_Rendering::Markdown._render(view, context: &context)
         }
 
         @Test(.timed(iterations: 20, warmup: 2))
         func `old string pipeline - 100 sections`() throws {
-            let markdown = Markdown_HTML_Rendering.Markdown { bookChapter }
+            let markdown = Markdown_HTML_Rendering::Markdown { bookChapter }
             _ = try String(markdown)
         }
 
@@ -107,8 +107,8 @@ extension `Performance Tests` {
             let content = generateBook(sections: 500)
             let state = Ownership.Mutable(HTML_Rendering_Core.HTML.Context())
             var context = Renderer.Document.Context.html(state: state)
-            let view = Markdown_HTML_Rendering.Markdown { content }
-            Markdown_HTML_Rendering.Markdown._render(view, context: &context)
+            let view = Markdown_HTML_Rendering::Markdown { content }
+            Markdown_HTML_Rendering::Markdown._render(view, context: &context)
         }
 
         @Test(
@@ -117,7 +117,7 @@ extension `Performance Tests` {
         )
         func `old string pipeline - 500 sections`() throws {
             let content = generateBook(sections: 500)
-            let markdown = Markdown_HTML_Rendering.Markdown { content }
+            let markdown = Markdown_HTML_Rendering::Markdown { content }
             _ = try String(markdown)
         }
     }

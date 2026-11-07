@@ -31,7 +31,7 @@ extension `Markdown Tests`.Test.Unit {
 
         @Test
         func `section with timestamp stores timestamp`() {
-            let timestamp = Markdown_HTML_Rendering.Timestamp(format: "1:30", speaker: nil)
+            let timestamp = Markdown_HTML_Rendering::Timestamp(format: "1:30", speaker: nil)
             let section = Markdown.Section(
                 title: "Chapter 1",
                 id: "chapter-1",

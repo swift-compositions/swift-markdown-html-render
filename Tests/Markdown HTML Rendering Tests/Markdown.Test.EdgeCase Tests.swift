@@ -42,26 +42,26 @@ extension `Markdown Tests`.Test.EdgeCase {
     struct `TimestampEdgeCases` {
         @Test
         func `empty format returns nil`() {
-            let ts = Markdown_HTML_Rendering.Timestamp(format: "", speaker: nil)
+            let ts = Markdown_HTML_Rendering::Timestamp(format: "", speaker: nil)
             #expect(ts == nil)
         }
 
         @Test
         func `non-numeric format returns nil`() {
-            let ts = Markdown_HTML_Rendering.Timestamp(format: "abc:def", speaker: nil)
+            let ts = Markdown_HTML_Rendering::Timestamp(format: "abc:def", speaker: nil)
             #expect(ts == nil)
         }
 
         @Test
         func `large hour value`() {
-            let ts = Markdown_HTML_Rendering.Timestamp(format: "99:59:59", speaker: nil)
+            let ts = Markdown_HTML_Rendering::Timestamp(format: "99:59:59", speaker: nil)
             #expect(ts != nil)
             #expect(ts?.duration == 99 * 3600 + 59 * 60 + 59)
         }
 
         @Test
         func `zero duration timestamp`() {
-            let ts = Markdown_HTML_Rendering.Timestamp(format: "0:00", speaker: nil)
+            let ts = Markdown_HTML_Rendering::Timestamp(format: "0:00", speaker: nil)
             #expect(ts != nil)
             #expect(ts?.duration == 0)
             #expect(ts?.id == "t0")
