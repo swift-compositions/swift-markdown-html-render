@@ -83,7 +83,7 @@ extension Markdown.Rendering.Frame.Placeholder {
 }
 
 extension Markdown.Rendering.Frame {
-    fileprivate struct CaptureState {
+    struct CaptureState {
         var actions: [Renderer::Renderer.Document.Action] = []
         var childrenIndex: Int? = nil
     }
