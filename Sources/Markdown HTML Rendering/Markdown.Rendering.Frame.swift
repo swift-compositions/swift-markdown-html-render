@@ -64,6 +64,10 @@ extension Markdown.Rendering.Frame {
 }
 
 extension Markdown.Rendering.Frame {
+
+    public struct Placeholder: HTML.View, Sendable {
+        public init() {}
+    }
 }
 
 extension Markdown.Rendering.Frame.Placeholder {
@@ -79,6 +83,10 @@ extension Markdown.Rendering.Frame.Placeholder {
 }
 
 extension Markdown.Rendering.Frame {
+    struct CaptureState {
+        var actions: [Renderer::Renderer.Document.Action] = []
+        var childrenIndex: Int? = nil
+    }
 }
 
 extension Renderer::Renderer.Document.Context {
