@@ -1,4 +1,4 @@
-@_exported import Markdown
+public import Markdown
 
 public enum SwiftMarkdown {}
 
