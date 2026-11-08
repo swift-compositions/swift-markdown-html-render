@@ -14,15 +14,7 @@ extension Markdown.Configuration {
 }
 
 extension Markdown.Configuration.SlugGenerator {
-    public struct Input: Sendable {
-        public let text: String
-        public let existingSlugs: Swift.Set<String>
 
-        public init(text: String, existingSlugs: Swift.Set<String>) {
-            self.text = text
-            self.existingSlugs = existingSlugs
-        }
-    }
 
     public static var `default`: Self {
         .init { input in
