@@ -5,7 +5,7 @@ import Testing
 
 private let bookChapter: String = {
     var parts: [String] = ["# Chapter: The Architecture of Rendering"]
-    for i in 1...100 {
+    (1...100).forEach { i in
         parts.append(
             """
             ## Section \(i): Design Considerations

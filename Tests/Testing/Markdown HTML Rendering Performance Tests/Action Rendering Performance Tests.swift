@@ -41,7 +41,7 @@ private let mediumMarkdown = """
 
 private let largeMarkdown: String = {
     var sections: [String] = ["# Large Document"]
-    for i in 1...20 {
+    (1...20).forEach { i in
         sections.append(
             """
             ## Section \(i)
