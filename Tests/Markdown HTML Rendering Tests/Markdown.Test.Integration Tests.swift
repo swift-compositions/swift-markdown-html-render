@@ -165,3 +165,62 @@ extension `Markdown Tests`.Test.Integration {
         }
     }
 }
+
+extension `Markdown Tests`.Test.Integration {
+    @Suite
+    struct `Image Rendering` {
+        @Test
+        func `default image renderer takes alt from the Markdown alt text`() {
+            let actions = Markdown.Rendering.Image.default.render(
+                .init(source: "pipeline.png", alt: "A diagram of the pipeline", title: nil)
+            )
+            #expect(String(describing: actions).contains("A diagram of the pipeline"))
+        }
+
+        @Test
+        func `default image renderer does not use the title as alt`() {
+            let actions = Markdown.Rendering.Image.default.render(
+                .init(source: "pipeline.png", alt: nil, title: "Hover title")
+            )
+            #expect(!String(describing: actions).contains("Hover title"))
+        }
+    }
+
+    @Suite
+    struct `BlockQuote Rendering` {
+        @Test
+        func `default block quote renderer uses the configured style`() {
+            let configured = Markdown.Configuration.Style.BlockQuoteStyle.default
+                .adding("Custom", backgroundColor: .background.warning, borderColor: .border.warning)
+            let withDefault = Markdown.Rendering.BlockQuote.default.render(
+                .init(kind: "Custom", children: [], isDiagnostic: false, diagnosticLevel: nil)
+            )
+            let withConfigured = Markdown.Rendering.BlockQuote.default.render(
+                .init(
+                    kind: "Custom",
+                    children: [],
+                    isDiagnostic: false,
+                    diagnosticLevel: nil,
+                    style: configured
+                )
+            )
+            #expect(String(describing: withDefault) != String(describing: withConfigured))
+        }
+
+        @Test
+        func `default block quote renderer output is unchanged for the default style`() {
+            let input = Markdown.Rendering.BlockQuote.Input(
+                kind: "Tip",
+                children: [],
+                isDiagnostic: false,
+                diagnosticLevel: nil,
+                style: .default
+            )
+            let first = Markdown.Rendering.BlockQuote.default.render(input)
+            let second = Markdown.Rendering.BlockQuote.default.render(
+                .init(kind: "Tip", children: [], isDiagnostic: false, diagnosticLevel: nil)
+            )
+            #expect(String(describing: first) == String(describing: second))
+        }
+    }
+}

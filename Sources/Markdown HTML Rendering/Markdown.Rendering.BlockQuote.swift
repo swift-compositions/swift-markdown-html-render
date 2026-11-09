@@ -3,7 +3,6 @@ import CSS_HTML_Rendering
 import CSS_Theming
 import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
-import SwiftMarkdown
 
 extension Markdown.Rendering {
     public struct BlockQuote: Sendable {
@@ -21,17 +20,21 @@ extension Markdown.Rendering.BlockQuote {
         public let children: [Markdown.Rendering.Action]
         public let isDiagnostic: Bool
         public let diagnosticLevel: Markdown.Diagnostic.Level?
+        /// The configured colours for block quotes, looked up by `kind`.
+        public let style: Markdown.Configuration.Style.BlockQuoteStyle
 
         public init(
             kind: String,
             children: [Markdown.Rendering.Action],
             isDiagnostic: Bool,
-            diagnosticLevel: Markdown.Diagnostic.Level?
+            diagnosticLevel: Markdown.Diagnostic.Level?,
+            style: Markdown.Configuration.Style.BlockQuoteStyle = .default
         ) {
             self.kind = kind
             self.children = children
             self.isDiagnostic = isDiagnostic
             self.diagnosticLevel = diagnosticLevel
+            self.style = style
         }
     }
 }
@@ -40,7 +43,7 @@ extension Markdown.Rendering.BlockQuote {
     public static var `default`: Self {
         .init { input in
             guard let level = input.diagnosticLevel else {
-                let style = SwiftMarkdown.BlockQuote.Style(blockName: input.kind)
+                let style = input.style.style(input.kind)
                 return Markdown.Rendering.capture {
                     HTML.BlockQuote.Element {
                         VStack(spacing: .rem(0.5)) {

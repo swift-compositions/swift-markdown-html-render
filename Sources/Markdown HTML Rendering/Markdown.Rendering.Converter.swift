@@ -120,7 +120,8 @@ extension Markdown.Rendering.Converter {
                 kind: kind,
                 children: childActions,
                 isDiagnostic: diagnosticLevel != nil,
-                diagnosticLevel: diagnosticLevel
+                diagnosticLevel: diagnosticLevel,
+                style: configuration.style.blockQuote
             )
         )
     }
