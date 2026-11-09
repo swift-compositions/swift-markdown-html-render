@@ -36,7 +36,7 @@ extension Markdown.Rendering.Image {
                     HTML.Anchor.Element(href: .init(value: source)) {
                         HTML.Image.Element(
                             src: .init(value: source),
-                            alt: .init(value: input.title ?? "")
+                            alt: .init(value: input.alt ?? "")
                         )
                         .css
                         .marginTop(MarginTop.zero)
