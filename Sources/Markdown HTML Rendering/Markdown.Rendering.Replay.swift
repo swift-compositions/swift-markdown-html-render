@@ -1,5 +1,6 @@
 @_spi(DynamicHTML) import HTML_Rendering_Core
 import Renderer
+import Renderer_Document
 
 extension Markdown.Rendering {
 

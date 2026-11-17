@@ -3,6 +3,7 @@ import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
 import Ownership
 import Renderer
+import Renderer_Document
 
 extension Markdown.Rendering {
 

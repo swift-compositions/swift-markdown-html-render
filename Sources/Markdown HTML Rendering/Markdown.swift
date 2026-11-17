@@ -4,6 +4,7 @@ import CSS_Theming
 import HTML_Rendering
 @_spi(DynamicHTML) public import HTML_Rendering_Core
 import Renderer
+import Renderer_Document
 
 public struct Markdown: HTML_Rendering_Core::HTML.View {
     let markdownString: String

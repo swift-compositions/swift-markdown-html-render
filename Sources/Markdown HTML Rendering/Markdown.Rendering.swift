@@ -4,6 +4,7 @@ import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
 import Ownership
 public import Renderer
+public import Renderer_Document
 
 extension Markdown {
 

@@ -1,5 +1,6 @@
 import Markdown_HTML_Rendering
 import Renderer
+import Renderer_Document
 import Testing
 
 private let simpleMarkdown = """

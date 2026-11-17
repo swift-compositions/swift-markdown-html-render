@@ -3,6 +3,7 @@ import CSS_Theming
 import HTML_Rendering
 @_spi(DynamicHTML) import HTML_Rendering_Core
 import Renderer
+import Renderer_Document
 import Standard_Library_Extensions
 
 extension Markdown.Rendering {
