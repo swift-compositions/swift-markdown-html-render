@@ -22,6 +22,7 @@ let package = Package(
         .package(url: "https://github.com/swift-compositions/swift-css-html-layout-render.git", branch: "main"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.4.0"),
         .package(url: "https://github.com/swift-atoms/swift-ownership.git", branch: "main"),
+        .package(url: "https://github.com/swift-molecules/swift-renderer-document.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-standard-library-extensions.git", branch: "main"),
 
     ],
@@ -41,6 +42,7 @@ let package = Package(
                 .product(name: "CSS HTML Layout Rendering", package: "swift-css-html-layout-render"),
                 .target(name: "SwiftMarkdown"),
                 .product(name: "Ownership", package: "swift-ownership"),
+                .product(name: "Renderer Document", package: "swift-renderer-document"),
                 .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
             ]
         ),
