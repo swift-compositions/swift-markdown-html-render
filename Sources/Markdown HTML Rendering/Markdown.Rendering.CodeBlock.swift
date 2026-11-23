@@ -15,13 +15,13 @@ extension Markdown.Rendering {
 extension Markdown.Rendering.CodeBlock {
     public struct Input: Sendable {
         // swift-linter:disable:next raw concept
-        // REASON: a code block's programming-language name from the info string, such as swift; RFC_5646.LanguageTag is a human language and refuses or misreads it, and no owner names programming languages.
+        // REASON: a code block's programming-language name from the info string, such as swift; IETF.RFC.`5646`.Tag is a human language and refuses or misreads it, and no owner names programming languages.
         public let language: String?
         public let code: String
         public let highlightLines: String?
 
         // swift-linter:disable:next raw concept
-        // REASON: a code block's programming-language name from the info string, such as swift; RFC_5646.LanguageTag is a human language and refuses or misreads it, and no owner names programming languages.
+        // REASON: a code block's programming-language name from the info string, such as swift; IETF.RFC.`5646`.Tag is a human language and refuses or misreads it, and no owner names programming languages.
         public init(language: String?, code: String, highlightLines: String?) {
             self.language = language
             self.code = code
